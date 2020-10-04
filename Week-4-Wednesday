@@ -1,0 +1,41 @@
+<html>
+<body>
+
+<svg width="4000" height="1100"> //For the front rectangle
+  <rect width="100" height="100" x="200" y="100" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" /> 
+    
+  <polygon points="200,100 300 100 250,50" style="fill:rgb(0,0,255);stroke:rgb(0,0,0);stroke-width:3" />  //Roof of the house
+  
+  <svg width="4000" height="1100">
+  <rect width="25" height="50" x="220" y="150" style="fill:rgb(0,0,0);stroke-width:3;stroke:rgb(0,0,0)"/>
+  
+  <svg height="4000" width="1100"> //Round window
+  <circle cx="250" cy="80" r="10" stroke="black" stroke-width="3" fill="black" />
+  
+  <svg width="4000" height="1100">// Rear end of the house
+  <rect width="30" height="20" x="260" y = "140" style="fill:black;stroke-width:3;stroke:rgb(0,0,0)" />
+ </svg>
+ 
+ 
+  
+  <svg width="4000" height="1100">
+  <rect width="150" height="100" x="300" y="100" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" /> 
+  
+  <svg height="4000" width="1100"> //Rear roof of the house
+  <polygon points="250,50 400,50 450,100 300,100" style="fill:Blue;stroke:Black;stroke-width:3" />
+ </svg>
+ 
+ <svg width="4000" height="1100">
+  <rect width="60" height="20" x="350" y = "130" style="fill:black;stroke-width:3;stroke:rgb(0,0,0)" />
+ </svg>
+ 
+  
+
+ 
+</svg>
+  </svg> 
+  
+</svg>
+
+</body>
+</html>
