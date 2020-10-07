@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>COVID-19 NY times database</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+<style>
+    path{
+        stroke-width: 4px;
+        fill:none;
+    }
+    path.cases{
+        stroke: cornflowerblue;
+    }
+    path.deaths{
+        stroke: coral;
+    }
+    g.axis{
+        font-size: 12pt;
+        stroke-width: 1px;
+    }
+    path.domain{
+        stroke-width: 1px;
+    }
+</style>
+
+</head>
+
+<body>
+<svg width="100%" height="100%" viewBox="0 0 1000 500"
+     style="background-color: #f3eee8">
+</svg>
+<script>
+    // step 1 select the svg element
+    let svg = d3.select('svg');
+    let margins = {x:80, y:50};
+    // step 2 read the database
+    d3.csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us.csv",d3.autoType)
+    .then(function(data){
+        // step 3 get the data and svg element extent
+        // svg extent
+        let rng = svg.attr('viewBox').split(' ')
+        rng = d3.map(rng,function (d){return parseInt(d)})
+        let xRng = [rng[0]+margins.x,rng[2]-margins.x];
+        let yRng = [rng[3]-margins.y,rng[1]+margins.y];
+        // data extent (domain)
+        let date_extent = d3.extent(data,
+                            function (d){return d.date})
+        let cases_extent = d3.extent(data,function (d){
+            return d.cases;
+        })
+        // step 4 make the X and Y scale
+        let xScale = d3.scaleTime().domain(date_extent).range(xRng)
+        let yScale = d3.scaleLinear().domain(cases_extent).range(yRng)
+        // step 5 make the line generator.
+        let cases_line = d3.line()
+            .x(function (d){return xScale(d.date)})
+            .y(function (d){return yScale(d.cases)})
+        let deaths_line = d3.line()
+            .x(function (d){return xScale(d.date)})
+            .y(function (d){return yScale(d.deaths)})
+        // step 6 add path element to the svg
+        let fig = svg.append('g');
+        // there is one path for each case so data is only added as one array
+        fig = fig.data([data]);
+        fig.append('path').attr("d",function (d){return cases_line(d)})
+            .attr("class","cases")
+        fig.append('path').attr("d",function (d){return deaths_line(d)})
+            .attr("class","deaths")
+        // step 7 add the axis
+        
+        let xAxis = svg.append('g').attr("transform","translate("+(0)+","+(yRng[0])+")")
+            .attr('class','axis')
+        .call(d3.axisBottom(xScale));// call the scale function to automatically add the axis
+        let yAxis = svg.append('g')
+            .attr('class','axis')
+            .attr("transform","translate("+(margins.x)+","+(0)+")")
+            .call(d3.axisLeft(yScale));
+
+          })
+
+</script>
+
+</body>
+</html>
